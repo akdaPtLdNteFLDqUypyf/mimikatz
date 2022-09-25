@@ -20,6 +20,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install Build Tools
+        shell: cmd
+        run: |
+          "vs_installer.exe" modify --installPath "C:\Program Files\Microsoft Visual Studio\2022\Preview" --add Microsoft.VisualStudio.Component.WinXP --quiet --norestart --nocache
+
       - name: Build Mimikatz
         run: |
           & "${{ env.MSBUILD_PATH }}" $Env:GITHUB_WORKSPACE\${{ env.SOLUTION_PATH }} /t:Build /p:'Configuration=Release;Platform=x64' /p:OutputPath=output
