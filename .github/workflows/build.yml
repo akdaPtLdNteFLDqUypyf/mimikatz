@@ -27,6 +27,15 @@ jobs:
 
       - name: Build Mimikatz
         run: |
-          & "${{ env.MSBUILD_PATH }}" $Env:GITHUB_WORKSPACE\${{ env.SOLUTION_PATH }} /t:Build /p:'Configuration=Release;Platform=x64' /p:OutputPath=output
+          & "${{ env.MSBUILD_PATH }}" $Env:GITHUB_WORKSPACE\${{ env.SOLUTION_PATH }} /t:Build /p:'Configuration=Release;Platform=x64'
           dir
-          dir output
+          dir x64
+
+      - name: Store Build
+        # if: github.event.inputs.save
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: mimikatz
+          path: |
+            x64\
