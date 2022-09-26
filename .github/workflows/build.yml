@@ -42,6 +42,7 @@ jobs:
       - name: Build Mimikatz # C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v141
         continue-on-error: true
         run: |
+          [Environment]::SetEnvironmentVariable("VCTargetsPath", "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140", "Machine")
           & "${{ env.MSBUILD_PATH }}" $Env:GITHUB_WORKSPACE\${{ env.SOLUTION_PATH }} /t:Build /p:'Configuration=Release;Platform=x64'
           dir
           dir x64
