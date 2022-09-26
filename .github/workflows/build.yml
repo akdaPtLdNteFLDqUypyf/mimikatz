@@ -22,7 +22,7 @@ jobs:
 
       - name: Test
         shell: cmd
-        if: false
+        # if: false
         run: |
           dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC"
           dir "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0"
@@ -30,8 +30,6 @@ jobs:
           reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\MSBuild\ToolsVersions\4.0" /v "VCTargetsPath" /d "$(MSBuildExtensionsPath32)\Microsoft.Cpp\v4.0\" /f
           reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSBuild\ToolsVersions\4.0" /v "VCTargetsPath"
           reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\MSBuild\ToolsVersions\4.0" /v "VCTargetsPath"
-
-          exit 1
 
       - name: Install Build Tools
         shell: cmd
