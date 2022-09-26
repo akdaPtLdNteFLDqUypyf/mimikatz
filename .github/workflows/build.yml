@@ -22,6 +22,7 @@ jobs:
 
       - name: Test
         shell: cmd
+        if: false
         run: |
           dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC"
           dir "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0"
@@ -42,7 +43,7 @@ jobs:
       - name: Build Mimikatz # C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v141
         continue-on-error: true
         run: |
-          setx VCTargetsPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v170" /M
+          setx VCTargetsPath "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v140" /M
           & "${{ env.MSBUILD_PATH }}" $Env:GITHUB_WORKSPACE\${{ env.SOLUTION_PATH }} /t:Build /p:'Configuration=Release;Platform=x64'
           dir
           dir x64
