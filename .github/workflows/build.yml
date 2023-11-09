@@ -40,7 +40,18 @@ jobs:
       - name: obs
         shell: powershell
         run: |
-          ls
+          cd ..;
+          (Get-ChildItem -Path "." -Recurse -File -Include *.h,*.c,*.vcxproj,*.rc) | ForEach-Object {
+            $newFileName = $_.Name -replace "mimikatz\.(h|c|rc)", "aabbcc.`$1"
+            $newPath = Join-Path -Path $_.Directory.FullName -ChildPath $newFileName
+            (Get-Content $_.FullName) | ForEach-Object {
+              $_ -ireplace "mimikatz", "aabbcc"
+            } | Set-Content $newPath
+            if ($newFileName -ne $_.Name) {
+              Remove-Item $_.FullName
+            }
+            Write-Host $newPath
+          };
 
       - name: Build Mimikatz # C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v141
         continue-on-error: true
